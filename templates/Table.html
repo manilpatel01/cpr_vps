@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Tables | Central Pivot Range</title>
+
+	<!-- Favicon icon -->
+
+	<link rel="stylesheet" href="{{url_for('static',filename='./vendor/chartist/css/chartist.min.css')}}">
+	<link href="{{url_for('static',filename='./vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}"
+		rel="stylesheet">
+	<link href="{{url_for('static',filename='./vendor/datatables/css/jquery.dataTables.min.css')}}" rel="stylesheet">
+	<link href="{{url_for('static',filename='./css/style.css')}}" rel="stylesheet">
+	<style>
+		.dataTables_wrapper .dataTables_paginate span .paginate_button.current {
+			background-color: #7356F1 !important;
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<!--*******************
+        Preloader start
+    ********************-->
+	<div id="preloader">
+		<div class="sk-three-bounce">
+			<div class="sk-child sk-bounce1"></div>
+			<div class="sk-child sk-bounce2"></div>
+			<div class="sk-child sk-bounce3"></div>
+		</div>
+	</div>
+	<!--*******************
+        Preloader end
+    ********************-->
+
+	<!--**********************************
+        Main wrapper start
+    ***********************************-->
+	<div id="main-wrapper">
+
+		<!--**********************************
+            Nav header start
+        ***********************************-->
+		<div class="nav-header">
+			<a class="brand-logo">
+
+				<p class="brand-title" style="font-size:23px;" width="100" fill="none">
+					Central Pivot Range (CPR)</p>
+			</a>
+
+		</div>
+		<!--**********************************
+            Nav header end
+        ***********************************-->
+
+
+
+		<!--**********************************
+            Header start
+        ***********************************-->
+		<div class="header">
+			<div class="header-content">
+				<nav class="navbar navbar-expand">
+					<div class="collapse navbar-collapse justify-content-between">
+						<div class="header-left">
+							<div class="input-group search-area right d-lg-inline-flex d-none">
+
+							</div>
+						</div>
+					</div>
+				</nav>
+			</div>
+		</div>
+		<!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+		<!--**********************************
+            Sidebar start
+        ***********************************-->
+		<div class="deznav">
+			<div class="deznav-scroll">
+
+				<div class="card-body contacts_body p-3 dz-scroll  " id="DZ_W_Contacts_Body">
+					<div class="basic-form">
+						<form action="/" method="POST" id="form">
+
+							<div class="form-row">
+
+								<div class="form-group col-md-12">
+									<label>Choose a Screener</label>
+									<select class="form-control default-select" name="Screeners" required
+										id="Screeners">
+										<option disabled selected>Select Screener</option>
+										<option value="Screener1">Next DWM Screener</option>
+										<option value="Screener2">Camarilla Confluence Screener</option>
+										<option value="Screener3">Intraday Confluence
+											Screener</option>
+										<option value="Screener4">Multi-Time Frame
+											Screener</option>
+									</select>
+								</div>
+
+								<!-- <div class="form-group col-md-12">
+									<label>Choose an Attribute to Sort</label>
+									<select class="form-control default-select" name="Attribute" id="Atributes"
+										required>
+										<option disabled selected>Select Attribute</option>
+										<option value="Ticker">Ticker</option>
+										<option value="LTP">LTP</option>
+										<option value="CPR_width">CPR Width</option>
+										<option value="ADR">ADR</option>
+									</select>
+								</div>
+								<div class="form-group col-md-12">
+									<label>Please select a Sorting Order</label>
+									<select class="form-control default-select" name="Order" id="Order">
+										<option disabled selected>Select Order</option>
+										<option value="Ascending">Ascending</option>
+										<option value="Descending">Descending</option>
+									</select>
+								</div> -->
+								<div class="form-group col-md-12">
+									<label>Maximum CPR Value</label>
+									<input type="number" name="MyminCPR" id="MyminCPR" placeholder="Enter Maximum CPR"
+										required step=0.01 min="0" class="form-control" style="border-radius: 5px;">
+								</div>
+								<div class="form-group col-md-12">
+									<label>Maximum ADR Value</label>
+									<input type="number" name="MyminADR" id="MyminADR" placeholder="Enter Maximum ADR"
+										required step=0.01 min="0" class="form-control" style="border-radius: 5px;">
+								</div>
+
+							</div>
+
+							<button type="submit" class="btn btn-primary  align-items-center"
+								style="border-radius: 5px;">Display Table</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--**********************************
+            Sidebar end
+        ***********************************-->
+
+		<!--**********************************
+            Content body start
+        ***********************************-->
+		<div class="content-body">
+			<div class="container-fluid">
+				<div class="form-head mb-4 mb-sm-5 d-flex  flex-wrap align-items-center ">
+					<h2 class="font-w600 mb-0 mr-auto">{{Screener}}</h2>
+
+					<button type="button" id="dailyButton" class="btn light mr-3 btn-primary"
+						style="border-radius: 5px;">Daily
+						Table</button>
+					<button type="button" id="weeklyButton" class="btn light mr-3  btn-primary"
+						style="border-radius: 5px;">Weekly
+						Table</button>
+					<button type="button" id="monthlyButton" class="btn light mr-3  btn-primary"
+						style="border-radius: 5px;">Monthly
+						Table</button>
+					<a href="/download/{{sNum}}/Daily"><button type="button" id="downloadButton"
+							class="btn light mr-3  btn-primary" style="border-radius: 5px;">Download Daily
+							Table</button></a>
+					<a href="/download/{{sNum}}/Weekly"><button type="button" id="downloadButton"
+							class="btn light mr-3  btn-primary" style="border-radius: 5px;">Download Weekly
+							Table</button></a>
+					<a href="/download/{{sNum}}/Monthly"><button type="button" id="downloadButton"
+							class="btn light mr-3  btn-primary" style="border-radius: 5px;">Download Monthly
+							Table</button></a>
+				</div>
+
+				<div class="row">
+					<div class="col-12">
+						<div class="card" style="border-radius: 5px;">
+
+
+							<li class="nav-item dropdown notification_dropdown">
+
+							</li>
+							{% if sNum != "Screener4" %}
+							<div class="card-body" id="dailyTableDiv" style="display: none; border-radius: 5px;">
+								<div class="welcome-text">
+									<h4>Daily Table</h4>
+									<span>Last Updated Date : {{LastDay}}</span>
+								</div>
+								<div class="table-responsive pt-3">
+									<table id="dailyTable" class="display" style="min-width: 845px">
+										<thead>
+											<tr>
+												{% for col in column_namesD[:-1] %}
+												{% if col == ATR and ORD == "Ascending" %}
+												<th style="color: #169c36;">{{col}}</th>
+												{% elif col == ATR and ORD == "Descending" %}
+												<th style="color: #ff0000;">{{col}}</th>
+												{% else %}
+												<th>{{col}}</th>
+												{% endif %}
+												{% endfor %}
+											</tr>
+										</thead>
+										<tbody>
+											{% for row in row_dataD %}
+											<tr>
+												{% for cell in row[:-1] %}
+												<td>{{cell}}</td>
+												{% endfor %}
+											</tr>
+											{% endfor %}
+										</tbody>
+
+									</table>
+								</div>
+							</div>
+							<div class="card-body" id="weeklyTableDiv" style="display: none;">
+								<div class="welcome-text">
+									<h4>Weekly Table</h4>
+									<span>Last Updated Date : {{LastWeek}}</span>
+								</div>
+								<div class="table-responsive pt-3">
+									<table id="weeklyTable" class="display" style="min-width: 845px">
+										<thead>
+											<tr>
+												{% for col in column_namesW[:-1] %}
+												{% if col == ATR and ORD == "Ascending" %}
+												<th style="color: #169c36;">{{col}}</th>
+												{% elif col == ATR and ORD == "Descending" %}
+												<th style="color: #ff0000;">{{col}}</th>
+												{% else %}
+												<th>{{col}}</th>
+												{% endif %}
+												{% endfor %}
+											</tr>
+										</thead>
+										<tbody>
+											{% for row in row_dataW %}
+											<tr>
+												{% for cell in row[:-1] %}
+												<td>{{cell}}</td>
+												{% endfor %}
+											</tr>
+											{% endfor %}
+										</tbody>
+
+									</table>
+								</div>
+							</div>
+							<div class="card-body" id="monthlyTableDiv" style="display: none;">
+								<div class="welcome-text">
+									<h4>Monthly Table</h4>
+									<span>Last Updated Date : {{LastMonth}}</span>
+								</div>
+								<div class="table-responsive pt-3">
+									<table id="monthlyTable" class="display" style="min-width: 845px">
+										<thead>
+											<tr>
+												{% for col in column_namesM[:-1] %}
+												{% if col == ATR and ORD == "Ascending" %}
+												<th style="color: #169c36;">{{col}}</th>
+												{% elif col == ATR and ORD == "Descending" %}
+												<th style="color: #ff0000;">{{col}}</th>
+												{% else %}
+												<th>{{col}}</th>
+												{% endif %}
+												{% endfor %}
+											</tr>
+										</thead>
+										<tbody>
+											{% for row in row_dataM %}
+											<tr>
+												{% for cell in row[:-1]%}
+												<td>{{cell}}</td>
+												{% endfor %}
+											</tr>
+											{% endfor %}
+										</tbody>
+
+									</table>
+								</div>
+							</div>
+							{% else %}
+							<div class="card-body" id="dailyTableDiv" style="display: none;">
+								<div class="welcome-text">
+									<h4>Daily Table</h4>
+									<span>Last Updated Date : {{LastDay}}</span>
+								</div>
+								<div class="table-responsive pt-3">
+									<table id="dailyTable" class="display" style="min-width: 845px">
+										<thead>
+											<tr>
+												{% for col in column_namesD[:-6] %}
+												<th>{{col}}</th>
+												{% endfor %}
+												<th style="color: #169c36;">
+													{{column_namesD[column_namesD|length-1]}}</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for row in row_dataD %}
+											<tr>
+												{% for cell in row[:-6] %}
+												<td>{{cell}}</td>
+												{% endfor %}
+												<td>{{row[row|length-1]}}</td>
+											</tr>
+											{% endfor %}
+										</tbody>
+
+									</table>
+								</div>
+							</div>
+							<div class="card-body" id="weeklyTableDiv" style="display: none;">
+								<div class="welcome-text">
+									<h4>Weekly Table</h4>
+									<span>Last Updated Date : {{LastWeek}}</span>
+								</div>
+								<div class="table-responsive pt-3">
+									<table id="weeklyTable" class="display" style="min-width: 845px">
+										<thead>
+											<tr>
+												{% for col in column_namesW[:-6] %}
+												<th>{{col}}</th>
+												{% endfor %}
+												<th style="color: #169c36;">
+													{{column_namesW[column_namesW|length-1]}}</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for row in row_dataW %}
+											<tr>
+												{% for cell in row[:-6] %}
+												<td>{{cell}}</td>
+												{% endfor %}
+												<td>{{row[row|length-1]}}</td>
+											</tr>
+											{% endfor %}
+										</tbody>
+
+									</table>
+								</div>
+							</div>
+							<div class="card-body" id="monthlyTableDiv" style="display: none;">
+								<div class="welcome-text">
+									<h4>Monthly Table</h4>
+									<span>Last Updated Date : {{LastMonth}}</span>
+								</div>
+								<div class="table-responsive pt-3">
+									<table id="monthlyTable" class="display" style="min-width: 845px">
+										<thead>
+											<tr>
+												{% for col in column_namesM[:-6] %}
+												<th>{{col}}</th>
+												{% endfor %}
+												<th style="color: #169c36;">
+													{{column_namesM[column_namesM|length-1]}}</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for row in row_dataM %}
+											<tr>
+												{% for cell in row[:-6]%}
+												<td>{{cell}}</td>
+												{% endfor %}
+												<td>{{row[row|length-1]}}</td>
+											</tr>
+											{% endfor %}
+										</tbody>
+
+									</table>
+								</div>
+							</div>
+							{% endif %}
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--**********************************
+            Content body end
+        ***********************************-->
+
+
+
+
+	<!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+	<!--**********************************
+        Scripts
+    ***********************************-->
+	<!-- Required vendors -->
+	<script src="{{url_for('static',filename='./vendor/global/global.min.js')}}"></script>
+	<script src="{{url_for('static',filename='./vendor/bootstrap-select/dist/js/bootstrap-select.min.js')}}"></script>
+	<script src="{{url_for('static',filename='./vendor/chart.js/Chart.bundle.min.js')}}"></script>
+	
+	<!-- Chart piety plugin files -->
+	<script src="{{url_for('static',filename='./vendor/peity/jquery.peity.min.js')}}"></script>
+	
+	<!-- Apex Chart -->
+	<script src="{{url_for('static',filename='./vendor/apexchart/apexchart.js')}}"></script>
+	<script src="{{url_for('static',filename='./vendor/datatables/js/jquery.dataTables.min.js')}}"></script>
+	<script src="{{url_for('static',filename='./js/plugins-init/datatables.init.js')}}"></script>
+	
+	
+	<!-- Dashboard 1 -->
+	<script src="{{url_for('static',filename='./js/dashboard/market-capital.js')}}"></script>
+	
+	<script src="{{url_for('static',filename='./js/custom.min.js')}}"></script>
+	<script src="{{url_for('static',filename='./js/deznav-init.js')}}"></script>
+	<script>
+		$(window).ready(function () {
+			$('#dailyTable').DataTable();
+			$('#weeklyTable').DataTable();
+			$('#monthlyTable').DataTable();
+
+			$('#dailyButton').click(function () {
+				$('#dailyTableDiv').show();
+				$('#weeklyTableDiv').hide();
+				$('#monthlyTableDiv').hide();
+			});
+			$('#weeklyButton').click(function () {
+				$('#dailyTableDiv').hide();
+				$('#weeklyTableDiv').show();
+				$('#monthlyTableDiv').hide();
+			});
+			$('#monthlyButton').click(function () {
+				$('#dailyTableDiv').hide();
+				$('#weeklyTableDiv').hide();
+				$('#monthlyTableDiv').show();
+			});
+		});
+	</script>
+
+
+
+</body>
+
+</html>
