@@ -1212,17 +1212,17 @@ def download(sNum,dwnld):
         global screener1D,screener1W,screener1M
         Screener1(minADR,minCPR,"TT")   
         if dwnld == "Daily":
-            screener1D.to_excel("Screener1D "+current+".xlsx")
+            screener1D.to_excel("Screener1D "+current+".xlsx",index=False,columns=["Ticker","P.High","P.Low","LTP","PP","BC","TC","S1","S2","R1","R2","H3","L3","CPR_width","ADR"])
             nameD = "Screener1D "+current+".xlsx"
             return send_file(nameD, as_attachment=True)
 
         elif dwnld == "Weekly":
-            screener1W.to_excel("Screener1W "+current+".xlsx")
+            screener1W.to_excel("Screener1W "+current+".xlsx",index=False,columns=["Ticker","P.High","P.Low","LTP","PP","BC","TC","S1","S2","R1","R2","H3","L3","CPR_width","ADR"])
             nameW = "Screener1W "+current+".xlsx"
             return send_file(nameW, as_attachment=True)
         
         elif dwnld == "Monthly":
-            screener1M.to_excel("Screener1M "+current+".xlsx")
+            screener1M.to_excel("Screener1M "+current+".xlsx",index=False,columns=["Ticker","P.High","P.Low","LTP","PP","BC","TC","S1","S2","R1","R2","H3","L3","CPR_width","ADR"])
             nameM = "Screener1M "+current+".xlsx"
             return send_file(nameM, as_attachment=True)
 
@@ -1230,17 +1230,17 @@ def download(sNum,dwnld):
         global screener2D,screener2W,screener2M
         Screener2(minADR,minCPR,"TT")   
         if dwnld == "Daily":
-            screener2D.to_excel("screener2D "+current+".xlsx")
+            screener2D.to_excel("screener2D "+current+".xlsx",index=False,columns=["Ticker","P.High","P.Low","LTP","PP","BC","TC","S1","S2","R1","R2","H3","L3","CPR_width","ADR"])
             nameD = "screener2D "+current+".xlsx"
             return send_file(nameD, as_attachment=True)
 
         elif dwnld == "Weekly":
-            screener2W.to_excel("screener2W "+current+".xlsx")
+            screener2W.to_excel("screener2W "+current+".xlsx",index=False,columns=["Ticker","P.High","P.Low","LTP","PP","BC","TC","S1","S2","R1","R2","H3","L3","CPR_width","ADR"])
             nameW = "screener2W "+current+".xlsx"
             return send_file(nameW, as_attachment=True)
         
         elif dwnld == "Monthly":
-            screener2M.to_excel("Screener2M "+current+".xlsx")
+            screener2M.to_excel("Screener2M "+current+".xlsx",index=False,columns=["Ticker","P.High","P.Low","LTP","PP","BC","TC","S1","S2","R1","R2","H3","L3","CPR_width","ADR"])
             nameM = "Screener2M "+current+".xlsx"
             return send_file(nameM, as_attachment=True)
 
@@ -1248,17 +1248,17 @@ def download(sNum,dwnld):
         global screener3D,screener3W,screener3M
         Screener3(minADR,minCPR,"TT")  
         if dwnld == "Daily":
-            screener3D.to_excel("screener3D "+current+".xlsx")
+            screener3D.to_excel("screener3D "+current+".xlsx",index=False,columns=["Ticker","P.High","P.Low","LTP","PP","BC","TC","S1","S2","R1","R2","H3","L3","CPR_width","ADR"])
             nameD = "screener3D "+current+".xlsx"
             return send_file(nameD, as_attachment=True)
 
         elif dwnld == "Weekly":
-            screener3W.to_excel("screener3W "+current+".xlsx")
+            screener3W.to_excel("screener3W "+current+".xlsx",index=False,columns=["Ticker","P.High","P.Low","LTP","PP","BC","TC","S1","S2","R1","R2","H3","L3","CPR_width","ADR"])
             nameW = "screener3W "+current+".xlsx"
             return send_file(nameW, as_attachment=True)
         
         elif dwnld == "Monthly":
-            screener3M.to_excel("Screener3M "+current+".xlsx")
+            screener3M.to_excel("Screener3M "+current+".xlsx",index=False,columns=["Ticker","P.High","P.Low","LTP","PP","BC","TC","S1","S2","R1","R2","H3","L3","CPR_width","ADR"])
             nameM = "Screener3M "+current+".xlsx"
             return send_file(nameM, as_attachment=True)
 
@@ -1266,17 +1266,17 @@ def download(sNum,dwnld):
         global screener4D,screener4W,screener4M
         Screener4(minADR,minCPR,"TT")  
         if dwnld == "Daily":
-            screener4D.to_excel("screener4D "+current+".xlsx")
+            screener4D.to_excel("screener4D "+current+".xlsx",index=False,columns=["Ticker","P.High","P.Low","LTP","PP","BC","TC","S1","S2","R1","R2","H3","L3","CPR_width","ADR"])
             nameD = "screener4D "+current+".xlsx"
             return send_file(nameD, as_attachment=True)
 
         elif dwnld == "Weekly":
-            screener4W.to_excel("screener4W "+current+".xlsx")
+            screener4W.to_excel("screener4W "+current+".xlsx",index=False,columns=["Ticker","P.High","P.Low","LTP","PP","BC","TC","S1","S2","R1","R2","H3","L3","CPR_width","ADR"])
             nameW = "screener4W "+current+".xlsx"
             return send_file(nameW, as_attachment=True)
         
         elif dwnld == "Monthly":
-            screener4M.to_excel("Screener4M "+current+".xlsx")
+            screener4M.to_excel("Screener4M "+current+".xlsx",index=False,columns=["Ticker","P.High","P.Low","LTP","PP","BC","TC","S1","S2","R1","R2","H3","L3","CPR_width","ADR"])
             nameM = "Screener4M "+current+".xlsx"
             return send_file(nameM, as_attachment=True)
             
